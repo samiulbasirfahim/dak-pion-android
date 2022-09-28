@@ -20,8 +20,8 @@ export default function Login({navigation}: loginTypes) {
       const user = await AsyncStorage.getItem('dakPion');
       if (user) {
         await navigation.navigate('Chat');
-        setLoading(false);
       }
+      setLoading(false);
     }
     loaduser();
   }, []);
@@ -69,11 +69,17 @@ export default function Login({navigation}: loginTypes) {
             </TouchableHighlight>
           </View>
         </View>
-        <Text
-          onPress={() => navigation.navigate('Register')}
-          style={{...globalStyle.text, alignSelf: 'center', marginBottom: 25}}>
-          Create an account
-        </Text>
+        <TouchableHighlight
+          underlayColor={'#ddd'}
+          style={{
+            marginBottom: 25,
+            alignSelf: 'center',
+            borderRadius: 8,
+            padding: 4,
+          }}
+          onPress={() => navigation.navigate('Register')}>
+          <Text style={globalStyle.text}>Create an account</Text>
+        </TouchableHighlight>
       </>
     );
   }

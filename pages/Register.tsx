@@ -1,19 +1,49 @@
+import axios from 'axios';
 import {useState} from 'react';
-import {Text, TextInput, TouchableHighlight, View} from 'react-native';
+import {
+  Alert,
+  AsyncStorage,
+  Text,
+  TextInput,
+  TouchableHighlight,
+  View,
+} from 'react-native';
 import globalStyle from '../styles/global';
 import styles from '../styles/registerStyle';
 import loginTypes from '../types/loginProps';
+import {registerRoute} from '../utils/apiRoutes';
 
 export default function Register({navigation}: loginTypes) {
-  const [name, setName] = useState<string>('');
+  const [username, setuserName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
-  function handleLogin() {
-    console.log(email, password);
-    setEmail('');
-    setPassword('');
+  async function handleRegister() {
+    if (!username) {
+      return Alert.alert('Name required');
+    }
+    if (!email) {
+      return Alert.alert('Email required');
+    }
+    if (password.length < 8) {
+      return Alert.alert('Password should be more than 8 charectar');
+    }
+    if (password !== confirmPassword) {
+      return Alert.alert('Password and confirm password are not same');
+    }
+    const {data} = await axios.post(registerRoute, {
+      username,
+      email,
+      password,
+    });
+
+    if (data.status === false) {
+      Alert.alert(data.msg);
+    } else if (data.status === true) {
+      AsyncStorage.setItem('dakPion', JSON.stringify(data.user));
+      navigation.navigate('Chat');
+    }
   }
 
   return (
@@ -22,8 +52,8 @@ export default function Register({navigation}: loginTypes) {
         <View style={styles.inputContainer}>
           <Text style={styles.headingText}>Register</Text>
           <TextInput
-            onChangeText={(newText: string) => setName(newText)}
-            value={name}
+            onChangeText={(newText: string) => setuserName(newText)}
+            value={username}
             style={styles.input}
             placeholder="Name"
           />
@@ -49,18 +79,24 @@ export default function Register({navigation}: loginTypes) {
             style={styles.input}
             placeholder="Confirm Password"
           />
-          <TouchableHighlight onPress={handleLogin}>
+          <TouchableHighlight onPress={handleRegister}>
             <View style={styles.button}>
               <Text style={styles.buttonText}>Login</Text>
             </View>
           </TouchableHighlight>
         </View>
       </View>
-      <Text
-        onPress={() => navigation.navigate('Login')}
-        style={{...globalStyle.text, alignSelf: 'center', marginBottom: 25}}>
-        Already have an account
-      </Text>
+      <TouchableHighlight
+        underlayColor={'#ddd'}
+        style={{
+          marginBottom: 25,
+          alignSelf: 'center',
+          borderRadius: 8,
+          padding: 4,
+        }}
+        onPress={() => navigation.navigate('Login')}>
+        <Text style={globalStyle.text}>Already have account</Text>
+      </TouchableHighlight>
     </>
   );
 }

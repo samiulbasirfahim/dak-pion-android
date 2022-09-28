@@ -1,6 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StyleSheet, Text, View} from 'react-native';
+import Avatar from './pages/Avatar';
 import Chat from './pages/Chat';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -22,6 +23,11 @@ export default function App() {
         <Stack.Screen
           name="Register"
           component={Register}
+          options={{title: 'Register'}}
+        />
+        <Stack.Screen
+          name="Avatar"
+          component={Avatar}
           options={{title: 'Register'}}
         />
         <Stack.Screen name="Chat" component={Chat} options={{title: 'Chat'}} />
