@@ -12,10 +12,6 @@ export default function Login() {
   const [email, setEmail] = useState<any>('');
   const [password, setPassword] = useState<any>('');
 
-  function handleTextChange(enteredText: any) {
-    console.log(enteredText);
-  }
-
   function handleLogin() {
     console.log(email, password);
     setEmail('');
