@@ -12,7 +12,7 @@ export default function CurrentUser({
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>
-        <TouchableHighlight onPress={moveToAvatar}>
+        <TouchableHighlight style={styles.logoContainer} underlayColor="#ddd" onPress={moveToAvatar}>
           <Logo imageLink={user?.avatarImage || ''} />
         </TouchableHighlight>
         <Text style={{...globalStyle.text, ...styles.username}}>

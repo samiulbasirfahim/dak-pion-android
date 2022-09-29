@@ -1,10 +1,18 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react';
-import {Alert, AsyncStorage, StyleSheet, Text, View} from 'react-native';
+import {
+  Alert,
+  AsyncStorage,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import Contact from '../components/contact';
 import CurrentUser from '../components/currentUser';
 import globalStyle from '../styles/global';
 import userType from '../types/userType';
-import {logoutRoute} from '../utils/apiRoutes';
+import {allUsersRoute, logoutRoute} from '../utils/apiRoutes';
 
 export default function Chat({
   route,
@@ -14,6 +22,7 @@ export default function Chat({
   route: any;
 }) {
   const [currentUser, setCurrentUser] = useState<userType>({});
+  const [contacts, setContacts] = useState<userType[]>([]);
   useEffect(() => {
     async function loadData() {
       const user: userType | any = await AsyncStorage.getItem('dakPion');
@@ -40,6 +49,18 @@ export default function Chat({
     }
   }, [currentUser]);
 
+  useEffect(() => {
+    async function loadData() {
+      if (currentUser) {
+        if (currentUser?.isAvatarImageSet) {
+          const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+          setContacts(data.data);
+        }
+      }
+    }
+    loadData();
+  }, [currentUser]);
+
   async function logOut() {
     const id = currentUser._id;
     const data = await axios.get(`${logoutRoute}/${id}`);
@@ -60,6 +81,11 @@ export default function Chat({
         logOut={logOut}
         moveToAvatar={moveToAvatar}
       />
+      <ScrollView>
+        {contacts.map((contact: userType) => (
+          <Contact user={contact} />
+        ))}
+      </ScrollView>
     </View>
   );
 }

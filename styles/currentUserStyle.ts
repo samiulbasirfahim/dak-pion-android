@@ -7,6 +7,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 10,
     alignItems: 'center',
+    borderBottomColor: '#000',
+    borderBottomWidth: 2
   },
   subContainer: {
     display: 'flex',
@@ -23,6 +25,10 @@ export const styles = StyleSheet.create({
   },
   logOutContainer: {
     padding: 6,
+    borderRadius: 8,
+  },
+  logoContainer: {
+    padding: 4,
     borderRadius: 8,
   },
 });
