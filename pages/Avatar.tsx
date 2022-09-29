@@ -28,7 +28,7 @@ export default function Avatar({navigation}: {navigation: any}) {
     isAvatarImageSet: false,
     password: '',
   });
-  const api = `https://api.multiavatar.com/4641646`;
+  const api = 'https://api.multiavatar.com/4641646';
 
   useEffect(() => {
     async function loadData() {

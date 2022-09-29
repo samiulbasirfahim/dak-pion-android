@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {StyleSheet, Text, View} from 'react-native';
+import {Alert, Button, StyleSheet, Text, View} from 'react-native';
 import Avatar from './pages/Avatar';
 import Chat from './pages/Chat';
 import Login from './pages/Login';
@@ -28,7 +28,16 @@ export default function App() {
         <Stack.Screen
           name="Avatar"
           component={Avatar}
-          options={{title: 'Register'}}
+          options={{
+            title: 'Register',
+            headerRight: () => (
+              <Button
+                onPress={() => Alert.alert('This is a button!')}
+                title="Info"
+                color="#fff"
+              />
+            ),
+          }}
         />
         <Stack.Screen name="Chat" component={Chat} options={{title: 'Chat'}} />
       </Stack.Navigator>

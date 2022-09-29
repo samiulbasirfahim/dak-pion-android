@@ -49,9 +49,17 @@ export default function Chat({
     }
   }
 
+  function moveToAvatar() {
+    navigation.navigate('Avatar');
+  }
+
   return (
     <View style={{...styles.container, ...globalStyle.container}}>
-      <CurrentUser user={currentUser} logOut={logOut} />
+      <CurrentUser
+        user={currentUser}
+        logOut={logOut}
+        moveToAvatar={moveToAvatar}
+      />
     </View>
   );
 }

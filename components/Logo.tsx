@@ -10,7 +10,7 @@ export default function ({imageLink}: logoType) {
         alignItems: 'center',
         marginEnd: 8,
       }}>
-      <Image style={{height: 40, width: 40}} source={{uri: imageLink}}></Image>
+      <Image style={{height: 40, width: 40}} source={{uri: imageLink}} />
     </View>
   );
 }

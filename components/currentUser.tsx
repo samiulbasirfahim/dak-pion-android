@@ -4,13 +4,19 @@ import globalStyle from '../styles/global';
 import {currentUserType} from '../types/currentUserType';
 import Logo from './Logo';
 
-export default function CurrentUser({user, logOut}: currentUserType) {
+export default function CurrentUser({
+  user,
+  logOut,
+  moveToAvatar,
+}: currentUserType) {
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>
-        <Logo imageLink={user.avatarImage}></Logo>
+        <TouchableHighlight onPress={moveToAvatar}>
+          <Logo imageLink={user?.avatarImage || ''} />
+        </TouchableHighlight>
         <Text style={{...globalStyle.text, ...styles.username}}>
-          {user.username}
+          {user?.username}
         </Text>
       </View>
       <TouchableHighlight
@@ -19,7 +25,8 @@ export default function CurrentUser({user, logOut}: currentUserType) {
         onPress={logOut}>
         <Image
           style={styles.logOut}
-          source={require('../assets/icons/logout.png')}></Image>
+          source={require('../assets/icons/logout.png')}
+        />
       </TouchableHighlight>
     </View>
   );

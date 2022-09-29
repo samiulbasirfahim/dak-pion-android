@@ -9,4 +9,5 @@ export interface currentUserType {
     __v?: any;
   };
   logOut: any;
+  moveToAvatar: any;
 }
