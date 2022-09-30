@@ -1,17 +1,14 @@
 import {StyleSheet} from 'react-native';
+import globalStyle from './global';
 
 export const styles = StyleSheet.create({
   container: {
-    borderRadius: 4,
-    padding: 8,
-    borderWidth: 1,
-    marginTop: 12,
-    borderColor: '#ddd',
-    backgroundColor: '#fff',
-    shadowColor: '#bf616a',
-    elevation: 2,
-
-    // shadowOffset:
+    paddingVertical: 16,
+    paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    marginTop: 2,
+    borderRadius: 8,
   },
   subContainer: {
     display: 'flex',
@@ -19,11 +16,22 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   avatar: {
-    width: 40,
-    height: 40,
+    width: 45,
+    height: 45,
     borderWidth: 2,
     borderColor: '#bf616a',
     borderRadius: 50,
-    marginEnd: 10
+    marginEnd: 12,
+  },
+  textContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  username: {
+    ...globalStyle.text,
+  },
+  message: {
+    fontSize: 12,
+    color: '#bf616a',
   },
 });

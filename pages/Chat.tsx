@@ -83,7 +83,7 @@ export default function Chat({
       />
       <ScrollView>
         {contacts.map((contact: userType) => (
-          <Contact user={contact} />
+          <Contact key={contact._id} user={contact} />
         ))}
       </ScrollView>
     </View>

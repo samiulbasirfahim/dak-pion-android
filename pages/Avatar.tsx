@@ -105,7 +105,10 @@ export default function Avatar({navigation}: {navigation: any}) {
                         }
                   }
                   onPress={() => setSelected(index)}>
-                  <Image style={styles.avatar} source={{uri: imageLink}} />
+                  <Image
+                    style={styles.avatar}
+                    source={{uri: imageLink || ''}}
+                  />
                 </TouchableHighlight>
               );
             }
