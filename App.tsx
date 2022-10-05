@@ -4,6 +4,7 @@ import {Alert, Button, StyleSheet, Text, View} from 'react-native';
 import Avatar from './pages/Avatar';
 import Chat from './pages/Chat';
 import Login from './pages/Login';
+import Messages from './pages/Messages';
 import Register from './pages/Register';
 
 const Stack = createNativeStackNavigator();
@@ -15,6 +16,7 @@ export default function App() {
         screenOptions={{
           headerShown: false,
         }}>
+        <Stack.Screen name="Chat" component={Chat} options={{title: 'Chat'}} />
         <Stack.Screen
           name="Login"
           component={Login}
@@ -30,16 +32,15 @@ export default function App() {
           component={Avatar}
           options={{
             title: 'Register',
-            headerRight: () => (
-              <Button
-                onPress={() => Alert.alert('This is a button!')}
-                title="Info"
-                color="#fff"
-              />
-            ),
           }}
         />
-        <Stack.Screen name="Chat" component={Chat} options={{title: 'Chat'}} />
+        <Stack.Screen
+          name="Messages"
+          component={Messages}
+          options={{
+            title: 'Messages',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

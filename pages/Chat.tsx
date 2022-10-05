@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import {
   Alert,
   AsyncStorage,
+  BackHandler,
   ScrollView,
   StyleSheet,
   Text,
@@ -21,11 +22,14 @@ export default function Chat({
   navigation: any;
   route: any;
 }) {
-  const [currentUser, setCurrentUser] = useState<userType>({});
+  const [currentUser, setCurrentUser] = useState<userType>(route?.user || {});
   const [contacts, setContacts] = useState<userType[]>([]);
   useEffect(() => {
     async function loadData() {
       const user: userType | any = await AsyncStorage.getItem('dakPion');
+      if (!user) {
+        return navigation.navigate('Login');
+      }
       setCurrentUser(JSON.parse(user));
     }
     loadData();
@@ -61,17 +65,29 @@ export default function Chat({
     loadData();
   }, [currentUser]);
 
+  // useEffect(() => {
+  //   navigation.addListener('beforeRemove', (e: any) => {
+  //     e.preventDefault();
+  //   });
+  // }, [navigation]);
+
   async function logOut() {
     const id = currentUser._id;
     const data = await axios.get(`${logoutRoute}/${id}`);
     if (data.status === 200) {
-      AsyncStorage.removeItem('dakPion');
       navigation.navigate('Login');
+      AsyncStorage.removeItem('dakPion');
     }
   }
 
   function moveToAvatar() {
     navigation.navigate('Avatar');
+  }
+
+  function moveToMessages(user: userType) {
+    navigation.navigate('Messages', {
+      user,
+    });
   }
 
   return (
@@ -83,7 +99,11 @@ export default function Chat({
       />
       <ScrollView>
         {contacts.map((contact: userType) => (
-          <Contact key={contact._id} user={contact} />
+          <Contact
+            key={contact._id}
+            user={contact}
+            moveToMessages={moveToMessages}
+          />
         ))}
       </ScrollView>
     </View>

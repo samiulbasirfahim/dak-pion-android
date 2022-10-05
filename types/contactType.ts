@@ -8,4 +8,6 @@ export default interface contactType {
     avatarImage?: string;
     __v?: any;
   };
+  key: any;
+  moveToMessages: (user: any) => void;
 }

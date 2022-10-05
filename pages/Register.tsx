@@ -1,8 +1,9 @@
 import axios from 'axios';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
   Alert,
   AsyncStorage,
+  BackHandler,
   Text,
   TextInput,
   TouchableHighlight,
@@ -37,6 +38,27 @@ export default function Register({navigation}: loginTypes) {
       email,
       password,
     });
+
+    useEffect(() => {
+      const backAction = () => {
+        Alert.alert('Dak Pion!', 'Are you sure you want to go back?', [
+          {
+            text: 'Cancel',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {text: 'YES', onPress: () => BackHandler.exitApp()},
+        ]);
+        return true;
+      };
+
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+
+      return () => backHandler.remove();
+    }, []);
 
     if (data.status === false) {
       Alert.alert(data.msg);

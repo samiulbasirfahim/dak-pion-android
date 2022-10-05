@@ -1,12 +1,13 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react';
-import {AsyncStorage, AsyncStorageStatic} from 'react-native';
+import {AsyncStorage, AsyncStorageStatic, BackHandler} from 'react-native';
 import {Alert, Text, TextInput, TouchableHighlight, View} from 'react-native';
 import globalStyle from '../styles/global';
 import styles from '../styles/loginStyle';
 import loginTypes from '../types/loginProps';
 import {loginRoute} from '../utils/apiRoutes';
 import Loading from './Loading';
+import {useRoute} from '@react-navigation/native';
 
 export default function Login({navigation}: loginTypes) {
   const [username, setUsername] = useState<any>('');
@@ -26,6 +27,27 @@ export default function Login({navigation}: loginTypes) {
     loaduser();
   }, []);
 
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Dak Pion!', 'Are you sure you want to go back?', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'YES', onPress: () => BackHandler.exitApp()},
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   async function handleLogin() {
     const {data} = await axios.post(loginRoute, {
       username,
@@ -36,7 +58,7 @@ export default function Login({navigation}: loginTypes) {
     }
     if (data.status === true) {
       AsyncStorage.setItem('dakPion', JSON.stringify(data.user));
-      navigation.navigate('Chat');
+      navigation.navigate('Chat', {user: data.user});
     }
   }
 

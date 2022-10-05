@@ -2,12 +2,12 @@ import {Image, Text, TouchableHighlight, View} from 'react-native';
 import {styles} from '../styles/contactStyle';
 import contactType from '../types/contactType';
 
-export default function Contact({user}: contactType) {
+export default function Contact({user, moveToMessages}: contactType) {
   return (
     <TouchableHighlight
       underlayColor="#ddd"
       style={styles.container}
-      onPress={() => {}}>
+      onPress={() => moveToMessages(user)}>
       <View style={styles.subContainer}>
         <Image
           style={styles.avatar}
